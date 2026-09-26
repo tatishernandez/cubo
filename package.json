@@ -7,9 +7,10 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "pdf": "bash scripts/pdf.sh"
+    "pdf": "node scripts/pdf.mjs"
   },
   "devDependencies": {
+    "playwright-core": "^1.53.0",
     "vite": "^8.2.1"
   }
 }

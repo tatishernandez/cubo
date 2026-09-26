@@ -366,3 +366,18 @@ tbody th { background: var(--bg); white-space: nowrap; }
 .rel { font-style: italic; font-weight: 700; }
 
 .cara-img { display: block; width: 100%; height: auto; border-radius: 12px; margin: 12px 0 4px; }
+
+.face-text p { margin: 0 0 0.55em; }
+
+/* ---------- Modo captura (?captura=N) para las imágenes del PDF ---------- */
+body.captura { --s: 1000px; padding: 0; justify-content: center; }
+body.captura .top,
+body.captura .hint,
+body.captura .faces-nav,
+body.captura .extras { display: none; }
+body.captura #stage { min-height: 100dvh; cursor: default; }
+body.captura .face-text { -webkit-mask-image: none; mask-image: none; }
+body.captura .face-img { object-fit: contain; object-position: center; }
+body.captura .face-cta { display: none; }
+/* En las caras con infografía el encabezado cede espacio a la imagen. */
+body.captura .face:has(.face-img) { font-size: 20px; }

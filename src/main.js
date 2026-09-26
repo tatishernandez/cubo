@@ -3,6 +3,10 @@ import { portada, caras, referencias, declaracionIA } from './content.js';
 const asset = (path) => import.meta.env.BASE_URL + path;
 const esc = (t) => t.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
+// Modo captura (?captura=N): cada cara muestra su contenido completo y el
+// cubo queda fijo con la cara N al frente, para tomar capturas del PDF.
+const CAPTURA = Number(new URLSearchParams(location.search).get('captura')) || 0;
+
 // Contenido completo de una cara: la imagen original o sus párrafos.
 const cuerpo = (c) =>
   c.imagen
@@ -83,7 +87,7 @@ caras.forEach((c, i) => {
     <p class="face-q">${c.pregunta}</p>
     ${c.imagen
       ? `<img class="face-img" src="${asset(c.imagen)}" alt="" draggable="false" />`
-      : `<div class="face-text">${esc(c.parrafos[0])}</div>`}
+      : `<div class="face-text">${(CAPTURA ? c.parrafos : c.parrafos.slice(0, 1)).map((p) => `<p>${esc(p)}</p>`).join('')}</div>`}
     <span class="face-cta">Toca para leer →</span>`;
   cube.appendChild(face);
 
@@ -105,6 +109,31 @@ let idle = true; // giro automático hasta la primera interacción
 let current = -1;
 
 const DRAG_K = 0.45; // grados por píxel
+
+if (CAPTURA) {
+  document.body.classList.add('captura');
+  idle = false;
+  // Leve giro para que se vea el volumen del cubo sin deformar el texto.
+  q = qNorm(qMul(qMul(qAxis(1, 0, 0, -6), qAxis(0, 1, 0, -10)), LAYOUT[CAPTURA - 1].q));
+  prepararCaptura();
+}
+
+// Reduce la letra de cada cara hasta que su texto completo quepa.
+async function prepararCaptura() {
+  await document.fonts.ready;
+  await Promise.all([...document.images].map((img) => img.decode().catch(() => {})));
+  document.querySelectorAll('.face').forEach((face) => {
+    const text = face.querySelector('.face-text');
+    if (!text) return;
+    let size = parseFloat(getComputedStyle(face).fontSize) * 1.25;
+    face.style.fontSize = `${size}px`;
+    while (text.scrollHeight > text.clientHeight + 1 && size > 6) {
+      size *= 0.97;
+      face.style.fontSize = `${size}px`;
+    }
+  });
+  window.__capturaLista = true;
+}
 
 function applyDrag(dx, dy) {
   const r = qMul(qAxis(0, 1, 0, dx), qAxis(1, 0, 0, -dy));

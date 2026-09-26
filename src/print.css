@@ -83,6 +83,7 @@ tr { break-inside: avoid; }
 
 /* ---------- Contenido de las caras ---------- */
 .figura { break-inside: avoid; }
+.captura-img { display: block; width: 100%; max-height: 21.5cm; object-fit: contain; margin: 0.5em auto 0; }
 .cara-img { display: block; max-width: 100%; max-height: 15.5cm; margin: 0.5em auto 0; }
 .pregunta { text-indent: 0; }
 .body ul, .body ol { margin: 0; padding-left: 1.27cm; }

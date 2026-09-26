@@ -31,11 +31,17 @@ const cuerpo = (c) =>
        </div>`
     : c.parrafos.map((p) => `<p>${esc(p)}</p>`).join('');
 
-const faces = caras.map((c) => page('face', `
-  <h1>Cara ${c.numero}. ${c.titulo}</h1>
-  <p class="pregunta"><strong>Pregunta orientadora:</strong> ${c.pregunta}</p>
-  <div class="body">${cuerpo(c)}</div>
-`)).join('');
+// Con ?capturas cada cara se muestra como la captura del cubo 3D que genera
+// scripts/pdf.mjs; sin él, como texto.
+const CAPTURAS = new URLSearchParams(location.search).has('capturas');
+
+const faces = caras.map((c) => page('face', CAPTURAS
+  ? `<h1>Cara ${c.numero}. ${c.titulo}</h1>
+     <img class="captura-img" src="${asset(`capturas/cara${c.numero}.png`)}" alt="Cara ${c.numero} del cubo: ${c.titulo}" />`
+  : `<h1>Cara ${c.numero}. ${c.titulo}</h1>
+     <p class="pregunta"><strong>Pregunta orientadora:</strong> ${c.pregunta}</p>
+     <div class="body">${cuerpo(c)}</div>`,
+)).join('');
 
 const refs = page('refs', `
   <h1>Referencias</h1>

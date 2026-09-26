@@ -18,12 +18,15 @@ npm run dev
 ## PDF de entrega
 
 ```bash
-npm run pdf   # genera Cubo_Seis_Caras_Evaluacion_Primer_Corte.pdf desde print.html
+npm run pdf -- Apellido_Nombre_Evaluacion_Primer_Corte.pdf
 ```
 
-Requiere Google Chrome. La versión imprimible también queda publicada en `/print.html`.
+`scripts/pdf.mjs` toma con Playwright una captura de cada cara del cubo 3D
+(`/?captura=N` muestra la cara N con su contenido completo) y arma el PDF desde
+`print.html?capturas`. Requiere Google Chrome instalado.
 
 ## Despliegue
 
 `.github/workflows/deploy.yml` construye con Vite y publica `dist/` en GitHub Pages
 en cada push a `main` (Settings → Pages → Source: GitHub Actions).
+Publicado en https://tatishernandez.github.io/cubo/
