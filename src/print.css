@@ -1,17 +1,15 @@
 /* Formato APA 7 para trabajo de estudiante:
    carta, márgenes de 2,54 cm, Times New Roman 12 pt, interlineado doble,
    sangría de primera línea de 1,27 cm y número de página arriba a la derecha. */
-@page {
-  size: letter;
-  margin: 2.54cm;
-  @top-right {
-    content: counter(page);
-    font-family: 'Times New Roman', Times, serif;
-    font-size: 12pt;
-  }
-}
+/* Formato de la Universidad INCCA (primera página de FORMATO POSGRADO):
+   carta, membrete de fondo en todas las páginas y márgenes de 3,4 cm arriba,
+   3 cm a los lados y 2,5 cm abajo. Cuerpo en APA 7: Times New Roman 12 pt,
+   interlineado doble y número de página arriba a la derecha. */
+@page { size: letter; margin: 0; }
 
 * { box-sizing: border-box; }
+
+html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 
 body {
   margin: 0;
@@ -20,15 +18,27 @@ body {
   line-height: 2;
   color: #000;
   background: #fff;
+  counter-reset: pagina;
 }
+
+.page {
+  position: relative;
+  width: 21.59cm;
+  height: 27.94cm;
+  padding: 3.4cm 3cm 2.5cm;
+  overflow: hidden;
+  background: url('/img/membrete-incca.jpg') right top / 22.3cm auto no-repeat;
+  counter-increment: pagina;
+  break-after: page;
+}
+.page:last-child { break-after: auto; }
+.num { position: absolute; top: 1.4cm; right: 3cm; line-height: 1; }
+.num::after { content: counter(pagina); }
 
 @media screen {
   body { background: #e9e4dc; }
-  .page { width: 21.59cm; min-height: 27.94cm; margin: 12px auto; padding: 2.54cm; background: #fff; box-shadow: 0 2px 12px rgba(0,0,0,.15); }
+  .page { margin: 12px auto; box-shadow: 0 2px 12px rgba(0,0,0,.15); }
 }
-
-.page { break-after: page; }
-.page:last-child { break-after: auto; }
 
 p { margin: 0; text-indent: 1.27cm; text-align: left; }
 
@@ -40,9 +50,15 @@ h3 { text-align: left; font-weight: bold; }
 strong { font-weight: bold; }
 
 /* ---------- Portada ---------- */
-.cover { text-align: center; }
-.cover p { text-indent: 0; text-align: center; }
-.cover-title { padding-top: 3cm; margin-bottom: 2em; }
+.cover p {
+  text-indent: 0;
+  text-align: center;
+  font-weight: bold;
+  text-transform: uppercase;
+  line-height: 1.16;
+  margin: 0 0 8pt;
+}
+.cover p.vacio { height: calc(12pt * 1.16); }
 
 /* ---------- Tablas y figuras ---------- */
 .tabla-num, .fig-num { text-indent: 0; margin-top: 1em; }
@@ -83,7 +99,7 @@ tr { break-inside: avoid; }
 
 /* ---------- Contenido de las caras ---------- */
 .figura { break-inside: avoid; }
-.captura-img { display: block; width: 100%; max-height: 21.5cm; object-fit: contain; margin: 0.5em auto 0; }
+.captura-img { display: block; width: 100%; max-height: 20.5cm; object-fit: contain; margin: 0.5em auto 0; }
 .cara-img { display: block; max-width: 100%; max-height: 15.5cm; margin: 0.5em auto 0; }
 .pregunta { text-indent: 0; }
 .body ul, .body ol { margin: 0; padding-left: 1.27cm; }

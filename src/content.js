@@ -13,6 +13,7 @@ export const portada = {
   grupo: '2026-3C',
   docente: 'Lic. María Trinidad Cabanzo Cuadrado',
   universidad: 'Universidad INCCA de Colombia',
+  ciudad: 'Bogotá D.C.',
   fecha: '4 de octubre de 2026',
   evaluacion: 'Evaluación del primer corte · Semanas 3 y 4',
 };

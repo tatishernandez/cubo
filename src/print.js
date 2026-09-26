@@ -5,19 +5,20 @@ import { portada, caras, referencias, declaracionIA } from './content.js';
 const asset = (path) => import.meta.env.BASE_URL + path;
 const esc = (t) => t.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
-const page = (cls, inner) => `<section class="page ${cls}">${inner}</section>`;
+const page = (cls, inner) => `<section class="page ${cls}"><span class="num"></span>${inner}</section>`;
 
+// Portada según la primera página del formato de la universidad: bloques
+// centrados en mayúsculas y negrita, separados por párrafos vacíos.
+const vacio = (n) => '<p class="vacio"></p>'.repeat(n);
 const cover = page('cover', `
-  <div class="cover-title">
-    <p class="titulo"><strong>${portada.tema}</strong></p>
-    <p class="subtitulo">Cubo de las Seis Caras: Análisis Tridimensional</p>
-  </div>
+  ${vacio(5)}
+  <p>${portada.tema}<br />Cubo de las Seis Caras: Análisis Tridimensional</p>
+  ${vacio(1)}
   <p>${portada.estudiante}</p>
-  <p>${portada.programa}, ${portada.universidad}</p>
-  <p>${portada.asignatura}</p>
-  <p>Grupo ${portada.grupo}</p>
-  <p>${portada.docente}</p>
-  <p>${portada.fecha}</p>
+  ${vacio(3)}
+  <p>${portada.asignatura}<br />Grupo ${portada.grupo}<br />Docente: ${portada.docente}</p>
+  ${vacio(3)}
+  <p>${portada.universidad}<br />${portada.programa}<br />${portada.ciudad}<br />${portada.fecha}</p>
 `);
 
 // Las imágenes originales se rotulan como figuras (APA 7).
