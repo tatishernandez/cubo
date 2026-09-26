@@ -7,7 +7,7 @@
 export const portada = {
   tema: 'Transformaciones de las infancias y evolución de la educación infantil en Colombia y Latinoamérica',
   lema: 'Seis miradas para comprender cómo se transforman las infancias y su educación.',
-  estudiante: '[Nombre completo de la estudiante]',
+  estudiante: 'Ghensy Tatiana Hernandez Gonzalez',
   asignatura: 'Educación Infantil en Colombia y Latinoamérica',
   programa: 'Licenciatura en Educación Infantil',
   grupo: '2026-3C',
